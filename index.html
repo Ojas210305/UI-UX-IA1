@@ -4,16 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Microinteractions</title>
-    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css" />
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-start min-h-screen p-4">
     <div class="header-container">
         <h1 class="text-4xl font-bold text-gray-900 mb-2">Ojas Khot</h1>
+        <h3 class="text-xl font-semibold text-gray-600">Roll No: 16014123033</h3>
+        <h3 class="text-xl font-semibold text-gray-600 mb-2">UI-UX IA 1</h3>
+        <hr class="w-full h-px my-4 bg-gray-300 border-0" />
         <h2 class="text-2xl font-semibold text-gray-700">
             A: Custom right-click context menu for an element with keyboard-accessible
             commands and positioning logic (within viewport).
@@ -22,23 +21,23 @@
             B: Gesture simulation for desktop (two-finger swipe with modifier) that triggers
             an animation (provide alt-key fallback).
         </h2>
-        <h3 class="text-xl font-semibold text-gray-600">Roll No: 16014123033</h3>
-        <h3 class="text-xl font-semibold text-gray-600">UI UX IA 1</h3>
     </div>
 
     <div class="container">
         <!-- A: Custom Right-Click Context Menu -->
-        <div class="card" id="context-menu-target" tabindex="0">
+        <div class="card" id="context-menu-target">
             <h2 class="text-2xl font-semibold mb-4 text-gray-800">Custom Context Menu</h2>
             <p class="text-gray-600" id="card-content">
-                Right-click anywhere on this card to open a custom context menu. The menu is positioned dynamically to stay within the viewport. You can also use the keyboard (Enter, Arrow keys) to navigate and select options.
+                Right-click anywhere on this card to open a custom context menu. The menu is positioned dynamically to stay within the viewport.
+                You can also use the keyboard (Enter, Arrow keys) to navigate and select options.
             </p>
         </div>
 
-        <ul id="custom-context-menu" class="context-menu" role="menu" aria-label="Custom Context Menu">
+        <ul id="custom-context-menu" class="context-menu" role="menu">
             <li class="context-menu-command" data-action="cut" tabindex="0" role="menuitem">Cut<span class="shortcut">Ctrl+X</span></li>
             <li class="context-menu-command" data-action="copy" tabindex="0" role="menuitem">Copy<span class="shortcut">Ctrl+C</span></li>
             <li class="context-menu-command" data-action="paste" tabindex="0" role="menuitem">Paste<span class="shortcut">Ctrl+V</span></li>
+            <li class="context-menu-command" data-action="intro" tabindex="0" role="menuitem">Intro</li>
             <li class="divider" tabindex="-1"></li>
             <li class="context-menu-command" data-action="remove" tabindex="0" role="menuitem">Remove</li>
         </ul>
@@ -46,9 +45,7 @@
         <!-- B: Gesture Simulation -->
         <div class="card">
             <h2 class="text-2xl font-semibold mb-4 text-gray-800">Gesture Simulation</h2>
-            <p class="text-gray-600 mb-4">
-                Click and hold on the box below, then drag left or right to simulate a two-finger swipe. Holding the Alt key while dragging will reverse the animation color.
-            </p>
+            <p class="text-gray-600 mb-4" id="gesture-description">Drag to interact. Hold Alt to change the animation.</p>
             <div id="gesture-box" class="gesture-box cursor-grab">
                 <span id="gesture-prompt" class="text-lg text-gray-500 font-medium">Drag here</span>
             </div>
@@ -56,11 +53,11 @@
     </div>
 
     <!-- Message Box -->
-    <div id="message-box" class="message-box" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <div id="message-box" class="message-box"></div>
 
-    <!-- Custom Script -->
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
