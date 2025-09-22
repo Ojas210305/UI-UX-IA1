@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuItems = customContextMenu.querySelectorAll('li[role="menuitem"]');
     const cardContent = document.getElementById('card-content');
     const messageBox = document.getElementById('message-box');
+    let activeItemIndex = -1;
 
     const showMessage = (text) => {
         messageBox.textContent = text;
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     };
 
+    // Function to position the context menu
     const positionContextMenu = (x, y) => {
         const menuWidth = customContextMenu.offsetWidth;
         const menuHeight = customContextMenu.offsetHeight;
@@ -23,13 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
         let newX = x;
         let newY = y;
 
-        if (x + menuWidth > viewportWidth) newX = viewportWidth - menuWidth - 10;
-        if (y + menuHeight > viewportHeight) newY = viewportHeight - menuHeight - 10;
+        if (x + menuWidth > viewportWidth) {
+            newX = viewportWidth - menuWidth - 10;
+        }
+        if (y + menuHeight > viewportHeight) {
+            newY = viewportHeight - menuHeight - 10;
+        }
 
         customContextMenu.style.left = `${newX}px`;
         customContextMenu.style.top = `${newY}px`;
     };
 
+    // Show the custom context menu on right-click
     contextMenuTarget.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         customContextMenu.classList.add('active');
@@ -37,12 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
         menuItems[0].focus();
     });
 
+    // Hide the context menu when clicking elsewhere
     document.addEventListener('click', (e) => {
-        if (!customContextMenu.contains(e.target) && !contextMenuTarget.contains(e.target)) {
+        if (
+            !customContextMenu.contains(e.target) &&
+            !contextMenuTarget.contains(e.target)
+        ) {
             customContextMenu.classList.remove('active');
         }
     });
 
+    // Keyboard navigation
     customContextMenu.addEventListener('keydown', (e) => {
         const len = menuItems.length;
         if (e.key === 'ArrowDown') {
@@ -65,7 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    menuItems.forEach(item => {
+    // Handle menu item clicks
+    menuItems.forEach((item) => {
         item.addEventListener('click', async () => {
             const action = item.getAttribute('data-action');
             const textContent = cardContent.textContent;
@@ -86,6 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         cardContent.textContent += pastedText;
                         showMessage('Text pasted from clipboard!');
                         break;
+                    case 'intro':
+                        cardContent.textContent =
+                            "This is a demonstration of a custom right-click context menu. It's built with HTML, CSS, and JavaScript to provide a unique and interactive experience. You can navigate this menu with both a mouse and your keyboard for full accessibility.";
+                        showMessage('Introduction loaded!');
+                        break;
                     case 'remove':
                         cardContent.textContent = '';
                         showMessage('Text removed!');
@@ -102,45 +120,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // B: Gesture Simulation
+    // B: Gesture Simulation (Particle Trail)
     const gestureBox = document.getElementById('gesture-box');
     let isDragging = false;
-    let startX = 0;
-    const createRippleTimeout = 50;
 
     gestureBox.addEventListener('mousedown', (e) => {
         e.preventDefault();
         isDragging = true;
-        startX = e.clientX;
-        gestureBox.classList.add('cursor-grabbing');
+        gestureBox.classList.add('is-active');
+        document.getElementById('gesture-prompt').classList.add('hidden');
     });
 
+    // Create a particle effect on mousemove while dragging
     document.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
 
-        const deltaX = e.clientX - startX;
+        const boxRect = gestureBox.getBoundingClientRect();
 
-        if (Math.abs(deltaX) > 50 && e.timeStamp - (gestureBox.lastRippleTime || 0) > createRippleTimeout) {
-            const ripple = document.createElement('div');
-            ripple.classList.add('ripple');
-            if (e.altKey) ripple.classList.add('reverse');
+        // Only create particles if the cursor is within the box
+        if (
+            e.clientX >= boxRect.left &&
+            e.clientX <= boxRect.right &&
+            e.clientY >= boxRect.top &&
+            e.clientY <= boxRect.bottom
+        ) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            if (e.altKey) {
+                particle.classList.add('reverse');
+            }
 
-            const boxRect = gestureBox.getBoundingClientRect();
-            const rippleSize = 50;
-            ripple.style.width = ripple.style.height = `${rippleSize}px`;
-            ripple.style.left = `${e.clientX - boxRect.left - rippleSize / 2}px`;
-            ripple.style.top = `${e.clientY - boxRect.top - rippleSize / 2}px`;
+            // Position the particle relative to the gesture box
+            const particleSize = 10 + Math.random() * 10;
+            particle.style.width = particle.style.height = `${particleSize}px`;
+            particle.style.left = `${e.clientX - boxRect.left}px`;
+            particle.style.top = `${e.clientY - boxRect.top}px`;
 
-            gestureBox.appendChild(ripple);
+            gestureBox.appendChild(particle);
 
-            ripple.addEventListener('animationend', () => ripple.remove());
-
-            gestureBox.lastRippleTime = e.timeStamp;
+            // Remove particle after animation ends
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
         }
     });
 
     document.addEventListener('mouseup', () => {
         isDragging = false;
-        gestureBox.classList.remove('cursor-grabbing');
+        gestureBox.classList.remove('is-active');
     });
 });
+
