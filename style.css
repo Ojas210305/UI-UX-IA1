@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 800px;
+    width: 100%;
+}
+
+.card {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.context-menu {
+    position: fixed;
+    z-index: 50;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 150px;
+    list-style: none;
+}
+
+.context-menu.active {
+    display: flex;
+}
+
+.context-menu li {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.context-menu li:hover, .context-menu li:focus {
+    background-color: #f3f4f6;
+    color: #1f2937;
+    outline: none;
+}
+
+.context-menu li.divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 0.5rem 0;
+    padding: 0;
+    cursor: default;
+}
+
+.context-menu-command {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.context-menu-command .shortcut {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.gesture-box {
+    background-color: #e5e7eb;
+    height: 250px;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border: 2px dashed #9ca3af;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(59, 130, 246, 0.5);
+    transform: scale(0);
+    animation: ripple-animation 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    pointer-events: none;
+}
+
+.ripple.reverse {
+    background-color: rgba(239, 68, 68, 0.5);
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.message-box {
+    position: fixed;
+    bottom: 20px;
+    background-color: #333;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 100;
+}
+
+.message-box.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
