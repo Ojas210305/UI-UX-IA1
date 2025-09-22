@@ -51,7 +51,7 @@ body {
         0 12px 20px -8px rgba(0, 0, 0, 0.08);
 }
 
-/* Custom context menu */
+/* Custom context menu (Modified) */
 .context-menu {
     position: fixed;
     z-index: 50;
@@ -62,7 +62,7 @@ body {
     display: none;
     flex-direction: column;
     gap: 0.25rem;
-    min-width: 150px;
+    min-width: 100px; /* Reduced to make the box smaller */
     list-style: none;
 }
 
@@ -187,11 +187,11 @@ body {
 /* Media queries for responsiveness */
 @media (min-width: 768px) {
     .container {
-        flex-direction: row;
+        flex-direction: column;
         gap: 2rem;
     }
 
     .card {
-        flex: 1;
+        width: 100%;
     }
 }
