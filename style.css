@@ -112,10 +112,11 @@ body {
     color: #9ca3af;
 }
 
-/* Gesture box styling */
+/* Gesture box styling (Modified) */
 .gesture-box {
     background-color: #f7f9fb;
-    height: 250px;
+    height: 400px; /* Increased height */
+    max-height: 500px; /* Added max-height to prevent it from getting too big */
     border-radius: 1.5rem;
     display: flex;
     justify-content: center;
@@ -184,10 +185,7 @@ body {
     transform: translateY(0);
 }
 
-/*
-    MEDIA QUERIES FOR RESPONSIVENESS
-*/
-
+/* Media queries for responsiveness */
 @media (min-width: 768px) {
     .container {
         flex-direction: row;
@@ -198,6 +196,4 @@ body {
         flex: 1;
     }
 }
-
-
 
